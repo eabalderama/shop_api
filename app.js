@@ -1,4 +1,5 @@
 const express = require('express');
+const router = express.Router();
 const app = express();
 const morgan = require('morgan');
 const cors = require('cors');
@@ -15,9 +16,11 @@ app.use('/uploads',express.static('uploads'));
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
-app.use('/products', require('./api/routes/products'));
-app.use('/orders', require('./api/routes/orders'));
-app.use('/users', require('./api/routes/users'));
+router.use('/products', require('./api/routes/products'));
+router.use('/orders', require('./api/routes/orders'));
+router.use('/users', require('./api/routes/users'));
+
+app.use('/api',router);
 
 app.use((req, res, next) => {
   const error = new Error('Not found');
